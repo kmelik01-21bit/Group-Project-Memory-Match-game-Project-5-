@@ -1,0 +1,18 @@
+import java.util.Scanner;
+
+public class MemoryMatchGame {
+    public static void main(String[] args) {
+
+        //Creating New Scanner
+        Scanner sc = new Scanner(System.in);
+
+        //Rest of the code bellow
+
+
+        
+        
+        
+        //Close Scanner
+        sc.close();
+    }
+}
