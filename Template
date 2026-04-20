@@ -3,6 +3,9 @@ import java.util.Scanner;
 import java.util.Arrays;
 
 public class MemoryMatchGame {
+    
+    static int[] cards = new int[16];
+
     public static void main(String[] args) {
 
         //Creating New Scanner + Random Object
@@ -10,7 +13,7 @@ public class MemoryMatchGame {
         Random rng = new Random();
 
         //Creating an array for the cards
-        int[] cards = new int[16];
+
 
         //Creating the cards and converting into pairs
         for (int i = 0; i < 16; i++) {
@@ -31,15 +34,61 @@ public class MemoryMatchGame {
         System.out.println("\nSHUFFLED DECK");
         System.out.println(Arrays.toString(cards));
 
+        //Grid layout
+        //Setting up layout for cards
+        int[] rowA = new int[4];
+        int[] rowB = new int[4];
+        int[] rowC = new int[4];
+        int[] rowD = new int[4];
+
+        for (int i = 0; i < 4; i++) {
+            rowA[i] = cards[i];
+        }
+        for (int i = 0; i < 4; i++) {
+            rowB[i] = cards[i + 4];
+        }
+        for (int i = 0; i < 4; i++) {
+            rowC[i] = cards[i + 8];
+        }
+        for (int i = 0; i < 4; i++) {
+            rowD[i] = cards[i + 12];
+        }
+
+        //Print Check
+        System.out.println(Arrays.toString(rowA) + Arrays.toString(rowB) + Arrays.toString(rowC) + Arrays.toString(rowD));
+
+        System.out.println("\n    [1] [2] [3] [4]\n" +
+                "[A] [?] [?] [?] [?]\n" +
+                "[B] [?] [?] [?] [?]\n" +
+                "[C] [?] [?] [?] [?]\n" +
+                "[D] [?] [?] [?] [?]\n");
+
+        System.out.println("Pick 2 matching Cards (ex: A2 and B4)");
+        System.out.print("Card 1: ");
+        String choice1 = sc.nextLine();
+
+        System.out.print("Card 2: ");
+        String choice2 = sc.nextLine();
+
+        //Check if choice is correct
+        boolean check = cardCheck(choice1, choice2);
 
 
-
-
+        //rest of the code will be added below
 
 
         
+
+
         //Close Scanner
         sc.close();
+    }
+
+    public static boolean cardCheck (String choice1, String choice2) {
+
+        //Empty for now
+
+        return true;
     }
 
     public static void shuffleCards (int[] array) {
