@@ -1,5 +1,6 @@
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Arrays;
 
 public class MemoryMatchGame {
     public static void main(String[] args) {
@@ -21,30 +22,35 @@ public class MemoryMatchGame {
 
         //Print check
         System.out.println("CARDS");
-        for (int i = 0; i < cards.length; i++) {
-            System.out.print(cards[i] + " ");
-        }
+        System.out.println(Arrays.toString(cards));
 
-        //(need help on making the shuffling work)
         //Shuffling
-        int[] shuffledDeck = new int[16];
-        for (int i =0; i < 16; i++) {
-            shuffledDeck[rng.nextInt(15)] = cards[i];
-        }
+        shuffleCards(cards);
 
         //Print check
         System.out.println("\nSHUFFLED DECK");
-        for (int i = 0; i < cards.length; i++) {
-            System.out.print(shuffledDeck[i] + " ");
-        }
-
-        //Rest of the code bellow
+        System.out.println(Arrays.toString(cards));
 
 
-        
-        
+
+
+
+
+
         
         //Close Scanner
         sc.close();
+    }
+
+    public static void shuffleCards (int[] array) {
+        Random rng = new Random();
+        for (int i = array.length - 1; i > 0; i--) {
+            int j = rng.nextInt(i + 1);
+
+            int temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+
+        }
     }
 }
