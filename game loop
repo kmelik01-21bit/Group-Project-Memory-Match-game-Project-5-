@@ -1,0 +1,63 @@
+int matches = 0; 
+
+  
+
+while (matches < 8) { 
+
+  
+
+    System.out.println(""" 
+
+             
+
+                [1] [2] [3] [4] 
+
+            [A] [?] [?] [?] [?] 
+
+            [B] [?] [?] [?] [?] 
+
+            [C] [?] [?] [?] [?] 
+
+            [D] [?] [?] [?] [?] 
+
+            """); 
+
+  
+
+    System.out.println("Pick 2 matching Cards (ex: A2 and B4)"); 
+
+  
+
+    System.out.print("Card 1: "); 
+
+    String choice1 = sc.nextLine().toUpperCase(); 
+
+  
+
+    System.out.print("Card 2: "); 
+
+    String choice2 = sc.nextLine().toUpperCase(); 
+
+  
+
+    boolean check = cardCheck(choice1, choice2); 
+
+  
+
+    if (check) { 
+
+        System.out.println("Pair found!"); 
+
+        matches++; 
+
+    } else { 
+
+        System.out.println("Wrong pair! Try again!"); 
+
+    } 
+
+} 
+
+  
+
+System.out.println("You found all matches!"); 
