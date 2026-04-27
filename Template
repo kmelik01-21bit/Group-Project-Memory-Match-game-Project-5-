@@ -95,88 +95,34 @@ public class MemoryMatchGame {
         sc.close();
     }
 
-    //Check for the value of both chosen positions and compare the values to check if they match
+       //Check for the value of both chosen positions and compare the values to check if they match
     public static boolean cardCheck (String choice1, String choice2) {
         //Creating temp values
-        int i = 0;
-        int j = 0;
+        int i = getCardValue(choice1);
+        int j = getCardValue(choice2);
 
-        //Checking position of each choice
-        if (choice1.contains("A")) {
-            for (char c : choice1.toCharArray()) {
-                if (c == choice1.charAt(choice1.length() - 1)) {
-                    i = rowA[choice1.charAt(choice1.length() - 1)];
-                    break;
-                }
-            }
-        } else if (choice1.contains("B")) {
-            for (char c : choice1.toCharArray()) {
-                if (c == choice1.charAt(choice1.length() - 1)) {
-                    i = rowB[choice1.charAt(choice1.length() - 1)];
-                    break;
-                }
-            }
-        } else if (choice1.contains("C")) {
-            for (char c : choice1.toCharArray()) {
-                if (c == choice1.charAt(choice1.length() - 1)) {
-                    i = rowC[choice1.charAt(choice1.length() - 1)];
-                    break;
-                }
-            }
-        } else if (choice1.contains("D")) {
-            for (char c : choice1.toCharArray()) {
-                if (c == choice1.charAt(choice1.length() - 1)) {
-                    i = rowD[choice1.charAt(choice1.length() - 1)];
-                    break;
-                }
-            }
-        } else {
-            System.out.println("INVALID CARD CHOICE FOR CARD 1");
-        }
-
-        if (choice2.contains("A")) {
-            for (char c : choice2.toCharArray()) {
-                if (c == choice2.charAt(choice2.length() - 1)) {
-                    j = rowA[choice2.charAt(choice2.length() - 1)];
-                    break;
-                }
-            }
-        } else if (choice2.contains("B")) {
-            for (char c : choice2.toCharArray()) {
-                if (c == choice2.charAt(choice2.length() - 1)) {
-                    j = rowB[choice2.charAt(choice2.length() - 1)];
-                    break;
-                }
-            }
-        } else if (choice2.contains("C")) {
-            for (char c : choice2.toCharArray()) {
-                if (c == choice2.charAt(choice2.length() - 1)) {
-                    j = rowC[choice2.charAt(choice2.length() - 1)];
-                    break;
-                }
-            }
-        } else if (choice2.contains("D")) {
-            for (char c : choice2.toCharArray()) {
-                if (c == choice2.charAt(choice2.length() - 1)) {
-                    j = rowD[choice2.charAt(choice2.length() - 1)];
-                    break;
-                }
-            }
-        } else {
-            System.out.println("INVALID CARD CHOICE FOR CARD 2");
-        }
-
-        //Compare the two values and exclude any zeros
-        if (i == 0 || j == 0) {
-            System.out.println("INVALID CARD(S).");
+        if (i == -1 || j == -1) {
+            System.out.println("INVALID CARD(S)");
             return false;
-        } else {
-            if (i == j) {
-                return true;
-            } else {
-                return false;
-            }
         }
+
+        return i == j;
+    }
+
+    private static int getCardValue (String choice) {
+        char row = choice.charAt(0);
+        int col = Character.getNumericValue(choice.charAt(choice.length() - 1));
+
+        return switch (row) {
+            case 'A' -> rowA[col];
+            case 'B' -> rowB[col];
+            case 'C' -> rowC[col];
+            case 'D' -> rowD[col];
+            default -> {
+                System.out.println("INVALID CARD CHOICE: " + choice);
+                yield -1;
+            }
+        };
     }
 
     public static void shuffleCards (int[] array) {
