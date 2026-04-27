@@ -49,33 +49,42 @@ public class MemoryMatchGame {
         System.out.println(Arrays.toString(rowA) + Arrays.toString(rowB) + Arrays.toString(rowC) + Arrays.toString(rowD));
 
         //Starting grid
-        System.out.println("""
-                
-                    [1] [2] [3] [4]
-                [A] [?] [?] [?] [?]
-                [B] [?] [?] [?] [?]
-                [C] [?] [?] [?] [?]
-                [D] [?] [?] [?] [?]
-                """);
+        int matches = 0;
+        int moves = 0;
 
-        //Ask user for input
-        System.out.println("Pick 2 matching Cards (ex: A2 and B4)");
+        while (matches < 8) {
+            System.out.println("""
+                [1] [2] [3] [4]
 
-        System.out.print("Card 1: ");
-        String choice1 = sc.nextLine();
+            [A] [?] [?] [?] [?]
 
-        System.out.print("Card 2: ");
-        String choice2 = sc.nextLine();
+            [B] [?] [?] [?] [?]
 
-        //Check if choice is correct
-        boolean check = cardCheck(choice1, choice2);
+            [C] [?] [?] [?] [?]
 
-        if (check) {
-            System.out.println("Pair found!");
-        } else {
-            System.out.println("Wrong pair! Try again!");
+            [D] [?] [?] [?] [?]
+
+            """);
+            System.out.println("Pick 2 matching Cards (ex: A2 and B4)");
+            System.out.print("Card 1: ");
+            String choice1 = sc.nextLine().toUpperCase();
+
+            System.out.print("Card 2: ");
+            String choice2 = sc.nextLine().toUpperCase();
+
+            boolean check = cardCheck(choice1, choice2);
+
+            if (check) {
+                System.out.println("Pair found!");
+                matches++;
+            } else {
+                System.out.println("Wrong pair! Try again!");
+            }
+            moves++;
         }
 
+        System.out.println("You found all matches! You took " + moves + " moves!");
+        
         //rest of the code will be added below
 
 
