@@ -1,0 +1,185 @@
+import java.util.Random;
+import java.util.Scanner;
+import java.util.Arrays;
+
+public class MemoryMatchGame {
+
+    //Creating an array for the cards
+    static int[] cards = new int[16];
+
+    static int[] rowA = new int[4];
+    static int[] rowB = new int[4];
+    static int[] rowC = new int[4];
+    static int[] rowD = new int[4];
+
+    //Reveal array
+    static boolean[] revealed = new boolean[16];
+
+    public static void main(String[] args) {
+
+        //Creating Scanner
+        Scanner sc = new Scanner(System.in);
+
+        //Creating the cards and converting into pairs
+        for (int i = 0; i < 16; i++) {
+            cards[i] = (i + 1);
+            if (cards[i] % 2 == 0) {
+                cards[i] = cards[i - 1];
+            }
+        }
+
+        //Shuffling
+        shuffleCards(cards);
+
+        //Grid layout
+        System.arraycopy(cards, 0, rowA, 0, 4);
+        System.arraycopy(cards, 4, rowB, 0, 4);
+        System.arraycopy(cards, 8, rowC, 0, 4);
+        System.arraycopy(cards, 12, rowD, 0, 4);
+
+        int matches = 0;
+        int moves = 0;
+
+        while (matches < 8) {
+
+            //Print board
+            System.out.println("   [1] [2] [3] [4]");
+
+            for (int r = 0; r < 4; r++) {
+                char rowLetter = (char) ('A' + r);
+                System.out.print("[" + rowLetter + "] ");
+
+                for (int c = 0; c < 4; c++) {
+                    int index = r * 4 + c;
+
+                    if (revealed[index]) {
+                        System.out.print("[" + cards[index] + "] ");
+                    } else {
+                        System.out.print("[?] ");
+                    }
+                }
+                System.out.println();
+            }
+
+            //Pick cards
+            System.out.println("\nPick 2 matching Cards (ex: A2 and B4)");
+
+            System.out.print("Card 1: ");
+            String choice1 = sc.nextLine().toUpperCase();
+
+            System.out.print("Card 2: ");
+            String choice2 = sc.nextLine().toUpperCase();
+
+            if (choice1.equals(choice2)) {
+                System.out.println("Pick different cards!\n");
+                continue;
+            }
+
+            int index1 = getIndex(choice1);
+            int index2 = getIndex(choice2);
+
+            if (index1 == -1 || index2 == -1) continue;
+
+            //Reveal cards
+            revealed[index1] = true;
+            revealed[index2] = true;
+
+            //Show updated board
+            System.out.println();
+            System.out.println("   [1] [2] [3] [4]");
+            for (int r = 0; r < 4; r++) {
+                char rowLetter = (char) ('A' + r);
+                System.out.print("[" + rowLetter + "] ");
+
+                for (int c = 0; c < 4; c++) {
+                    int index = r * 4 + c;
+
+                    if (revealed[index]) {
+                        System.out.print("[" + cards[index] + "] ");
+                    } else {
+                        System.out.print("[?] ");
+                    }
+                }
+                System.out.println();
+            }
+
+            boolean check = cardCheck(choice1, choice2);
+
+            if (check) {
+                System.out.println("Pair found!");
+                matches++;
+            } else {
+                System.out.println("Wrong pair!");
+
+                try { Thread.sleep(1500); } catch (Exception e) {}
+
+                //Hide cards again
+                revealed[index1] = false;
+                revealed[index2] = false;
+            }
+
+            moves++;
+        }
+
+        System.out.println("You found all matches! You took " + moves + " moves!");
+        sc.close();
+    }
+
+    //Check match
+    public static boolean cardCheck(String choice1, String choice2) {
+        int i = getCardValue(choice1);
+        int j = getCardValue(choice2);
+        return i == j;
+    }
+
+    //Get card value
+    private static int getCardValue(String choice) {
+        char row = choice.charAt(0);
+        int col = Integer.parseInt(choice.substring(1)) - 1;
+
+        int[] selectedRow;
+
+        switch (row) {
+            case 'A': selectedRow = rowA; break;
+            case 'B': selectedRow = rowB; break;
+            case 'C': selectedRow = rowC; break;
+            case 'D': selectedRow = rowD; break;
+            default: return -1;
+        }
+
+        if (col < 0 || col >= selectedRow.length) return -1;
+
+        return selectedRow[col];
+    }
+
+    //Convert to index
+    public static int getIndex(String choice) {
+        char row = choice.charAt(0);
+        int col = Integer.parseInt(choice.substring(1)) - 1;
+
+        int r = 0;
+
+        if (row == 'A') r = 0;
+        else if (row == 'B') r = 1;
+        else if (row == 'C') r = 2;
+        else if (row == 'D') r = 3;
+        else return -1;
+
+        if (col < 0 || col > 3) return -1;
+
+        return r * 4 + col;
+    }
+
+    //Shuffle cards
+    public static void shuffleCards(int[] array) {
+        Random rng = new Random();
+
+        for (int i = array.length - 1; i > 0; i--) {
+            int j = rng.nextInt(i + 1);
+
+            int temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
+    }
+}
